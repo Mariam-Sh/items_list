@@ -1,25 +1,23 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+const  App = () => {
+  const [data, setData] = useState([]);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users/')
+      .then((response) => response.json())
+      .then((json) => setData(json));
+  },[]);
+
+  // console.log(data)
+  return data.map( (d,index) => (
+    <div className='card' key={index}>
+      <p disabled><span className='des'>Name:</span> {d.name} </p>
+      <p><span className='des'>Username:</span> {d.username}</p>
+      <p><span className='des'>Email:</span> {d.email}</p>
+      <p><span className='des'>City:</span> {d.address.city}</p>
     </div>
-  );
+  ) ) 
 }
 
-export default App;
+export default App
